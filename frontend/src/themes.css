@@ -1,0 +1,50 @@
+/* Chessboard themes */
+.green {
+  --board-dark: #739552;
+  --board-light: #ebecd0;
+  --board-light-text: #739552;
+  --board-dark-text: #ebecd0;
+  --board-highlight: #f5f682;
+  --board-highlight-text: #b9ca43;
+  --board-selected: #baca44;
+}
+
+.wood {
+  --board-dark: #b58863;
+  --board-light: #f0d9b5;
+  --board-light-text: #b58863;
+  --board-dark-text: #f0d9b5;
+  --board-highlight: #ced26b;
+  --board-highlight-text: #aaa23a;
+  --board-selected: #d8c28e;
+}
+
+.glass {
+  --board-dark: #4b7399;
+  --board-light: #eae9d2;
+  --board-light-text: #4b7399;
+  --board-dark-text: #eae9d2;
+  --board-highlight: #91b5c9;
+  --board-highlight-text: #6b93a8;
+  --board-selected: #6697c4;
+}
+
+.ocean {
+  --board-dark: #407b9a;
+  --board-light: #cde6e9;
+  --board-light-text: #407b9a;
+  --board-dark-text: #cde6e9;
+  --board-highlight: #70b8c2;
+  --board-highlight-text: #3b8894;
+  --board-selected: #559dbd;
+}
+
+.dark-neon {
+  --board-dark: #2b2b2b;
+  --board-light: #4a4a4a;
+  --board-light-text: #2b2b2b;
+  --board-dark-text: #4a4a4a;
+  --board-highlight: #5b7c99;
+  --board-highlight-text: #3c5870;
+  --board-selected: #6e6e6e;
+}

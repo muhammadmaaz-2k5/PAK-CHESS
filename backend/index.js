@@ -141,55 +141,60 @@ io.on('connection', (socket) => {
 const WS_PORT = process.env.WS_PORT || 8080;
 let wss;
 
-try {
-  wss = new WebSocketServer({ port: WS_PORT });
-  wss.on('connection', (ws, req) => {
-    try {
-      const parsedUrl = url.parse(req.url, true);
-      const token = parsedUrl.query.token;
+if (!process.env.VERCEL) {
+  try {
+    wss = new WebSocketServer({ port: WS_PORT });
+    wss.on('connection', (ws, req) => {
+      try {
+        const parsedUrl = url.parse(req.url, true);
+        const token = parsedUrl.query.token;
 
-      let userClaims = {
-        userId: 'guest-' + Math.random().toString(36).substring(2, 8),
-        name: 'Guest User',
-        isGuest: true,
-      };
+        let userClaims = {
+          userId: 'guest-' + Math.random().toString(36).substring(2, 8),
+          name: 'Guest User',
+          isGuest: true,
+        };
 
-      if (token) {
-        try {
-          const decoded = jwt.verify(token, JWT_SECRET);
-          userClaims = decoded;
-        } catch (err) {
-          console.warn('[WS] Invalid JWT token supplied over WS, using fallback guest identity');
+        if (token) {
+          try {
+            const decoded = jwt.verify(token, JWT_SECRET);
+            userClaims = decoded;
+          } catch (err) {
+            console.warn('[WS] Invalid JWT token supplied over WS, using fallback guest identity');
+          }
         }
+
+        const user = new User(ws, userClaims);
+        console.log(`[WS] Client connected: ${user.name} (${user.userId})`);
+        gameManager.addUser(user);
+
+        ws.on('close', () => {
+          console.log(`[WS] Client disconnected: ${user.name} (${user.userId})`);
+          gameManager.removeUser(ws);
+        });
+      } catch (err) {
+        console.error('[WS] Connection error:', err);
       }
+    });
 
-      const user = new User(ws, userClaims);
-      console.log(`[WS] Client connected: ${user.name} (${user.userId})`);
-      gameManager.addUser(user);
-
-      ws.on('close', () => {
-        console.log(`[WS] Client disconnected: ${user.name} (${user.userId})`);
-        gameManager.removeUser(ws);
-      });
-    } catch (err) {
-      console.error('[WS] Connection error:', err);
-    }
-  });
-
-  console.log(`WebSocket Server running on ws://localhost:${WS_PORT}`);
-} catch (err) {
-  console.error('Error initializing raw WebSocket server:', err);
+    console.log(`WebSocket Server running on ws://localhost:${WS_PORT}`);
+  } catch (err) {
+    console.error('Error initializing raw WebSocket server:', err);
+  }
 }
 
-// Start HTTP + Socket.IO Server
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`HTTP + Socket.IO Server running on http://localhost:${PORT}`);
-});
+// Start HTTP + Socket.IO Server (only in standalone environments)
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
+  server.listen(PORT, () => {
+    console.log(`HTTP + Socket.IO Server running on http://localhost:${PORT}`);
+  });
+}
 
-module.exports = {
-  app,
-  server,
-  io,
-  gameManager,
-};
+// Attach references to app for module access
+app.server = server;
+app.io = io;
+app.gameManager = gameManager;
+
+// Export Express app as the default export for Vercel Serverless
+module.exports = app;

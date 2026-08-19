@@ -138,12 +138,12 @@ io.on('connection', (socket) => {
 /**
  * 2. Raw WebSocket Server Setup (Port 8080 or dedicated instance for raw ws compatibility)
  */
-const WS_PORT = process.env.WS_PORT || 8080;
 let wss;
 
 if (!process.env.VERCEL) {
   try {
-    wss = new WebSocketServer({ port: WS_PORT });
+    // Attach WebSocketServer directly to the HTTP server so both REST and WS share the same port
+    wss = new WebSocketServer({ server });
     wss.on('connection', (ws, req) => {
       try {
         const parsedUrl = url.parse(req.url, true);
@@ -177,9 +177,9 @@ if (!process.env.VERCEL) {
       }
     });
 
-    console.log(`WebSocket Server running on ws://localhost:${WS_PORT}`);
+    console.log(`WebSocket Server attached to HTTP server`);
   } catch (err) {
-    console.error('Error initializing raw WebSocket server:', err);
+    console.error('Error initializing WebSocket server:', err);
   }
 }
 

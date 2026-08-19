@@ -108,10 +108,10 @@ export const Landing = () => {
                 </div>
               </div>
               <Link
-                to="/game/random"
+                to="/leaderboard"
                 className="text-xs font-semibold text-green-400 hover:text-green-300 transition-colors"
               >
-                Join Leaderboard →
+                View Full Leaderboard →
               </Link>
             </div>
 
@@ -151,7 +151,7 @@ export const Landing = () => {
               </p>
             </div>
             <a
-              href="https://github.com/code100x/chess"
+              href="https://github.com/muhammadmaaz-2k5/PAK-CHESS"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3.5 rounded-xl border border-white/20 bg-stone-800 hover:bg-stone-700 font-bold text-sm flex items-center gap-3 transition-all shrink-0"

@@ -35,8 +35,11 @@ export function PlayCard() {
         />
       ),
       title: 'Play Computer',
-      description: 'Challenge an AI bot at various skill levels',
-      disabled: true,
+      description: 'Challenge an AI bot from novice to grandmaster',
+      onClick: () => {
+        navigate('/computer');
+      },
+      disabled: false,
     },
     {
       icon: (
@@ -62,8 +65,11 @@ export function PlayCard() {
         />
       ),
       title: 'Tournaments',
-      description: 'Join competitive swiss and arena tournaments',
-      disabled: true,
+      description: 'Join competitive Swiss and Arena tournaments',
+      onClick: () => {
+        navigate('/tournaments');
+      },
+      disabled: false,
     },
     {
       icon: (
@@ -74,8 +80,11 @@ export function PlayCard() {
         />
       ),
       title: 'Chess Variants',
-      description: '960, King of the Hill, Crazyhouse and more',
-      disabled: true,
+      description: 'Chess960, King of the Hill, Three-Check and more',
+      onClick: () => {
+        navigate('/variants');
+      },
+      disabled: false,
     },
   ];
 
@@ -86,7 +95,7 @@ export function PlayCard() {
           <div className="text-3xl font-extrabold text-white flex items-center gap-2">
             Play <span className="text-green-500">Pak Chess</span>
           </div>
-          <img className="w-24 mt-4 drop-shadow-lg" src="/chess.png" alt="chess" />
+          <img className="w-24 mt-4 drop-shadow-lg" src="/chess.png" alt="Pak Chess" />
         </CardTitle>
       </CardHeader>
       <CardContent className="grid gap-3 p-0 mt-2">

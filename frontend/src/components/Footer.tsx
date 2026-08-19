@@ -10,17 +10,24 @@ export const Footer = () => {
           <span>•</span>
           <Link to="/game/random" className="hover:text-white transition-colors">Play Online</Link>
           <span>•</span>
-          <Link to="/settings/themes" className="hover:text-white transition-colors">Board Themes</Link>
+          <Link to="/computer" className="hover:text-white transition-colors">Play Computer</Link>
           <span>•</span>
-          <Link to="/login" className="hover:text-white transition-colors">Sign In</Link>
+          <Link to="/tournaments" className="hover:text-white transition-colors">Tournaments</Link>
+          <span>•</span>
+          <Link to="/variants" className="hover:text-white transition-colors">Variants</Link>
+          <span>•</span>
+          <Link to="/leaderboard" className="hover:text-white transition-colors">Leaderboard</Link>
+          <span>•</span>
+          <Link to="/settings/themes" className="hover:text-white transition-colors">Board Themes</Link>
         </div>
 
         <div className="flex gap-4 mt-2">
           <a
-            href="https://github.com/code100x/chess"
+            href="https://github.com/muhammadmaaz-2k5/PAK-CHESS"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 rounded-full bg-stone-800 hover:bg-stone-700 hover:text-white transition-colors text-textSecondary"
+            title="Star on GitHub"
           >
             <Github size={18} />
           </a>

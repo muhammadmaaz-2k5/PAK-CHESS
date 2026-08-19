@@ -5,6 +5,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Landing } from './screens/Landing';
 import { Game } from './screens/Game';
 import Login from './screens/Login';
+import { Leaderboard } from './screens/Leaderboard';
+import { PlayComputer } from './screens/PlayComputer';
+import { Tournaments } from './screens/Tournaments';
+import { Variants } from './screens/Variants';
 import { Suspense } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Loader } from './components/Loader';
@@ -40,6 +44,38 @@ function AuthApp() {
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/leaderboard"
+          element={
+            <Layout>
+              <Leaderboard />
+            </Layout>
+          }
+        />
+        <Route
+          path="/computer"
+          element={
+            <Layout>
+              <PlayComputer />
+            </Layout>
+          }
+        />
+        <Route
+          path="/tournaments"
+          element={
+            <Layout>
+              <Tournaments />
+            </Layout>
+          }
+        />
+        <Route
+          path="/variants"
+          element={
+            <Layout>
+              <Variants />
+            </Layout>
+          }
+        />
         <Route
           path="/game/:gameId"
           element={

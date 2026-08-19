@@ -28,12 +28,12 @@ router.get('/recent', async (req, res) => {
 
 /**
  * GET /v1/games/leaderboard
- * Top ranked players
+ * Top ranked players with win/loss records
  */
 router.get('/leaderboard', async (req, res) => {
   try {
     const topPlayers = await db.user.findMany({
-      take: 50,
+      take: 100,
       orderBy: { rating: 'desc' },
       select: {
         id: true,
@@ -41,10 +41,45 @@ router.get('/leaderboard', async (req, res) => {
         username: true,
         rating: true,
         createdAt: true,
+        gamesAsWhite: {
+          select: { result: true, status: true },
+        },
+        gamesAsBlack: {
+          select: { result: true, status: true },
+        },
       },
     });
 
-    return res.json({ success: true, leaderboard: topPlayers });
+    const leaderboard = topPlayers.map((player) => {
+      const whiteGames = player.gamesAsWhite || [];
+      const blackGames = player.gamesAsBlack || [];
+      const totalGames = whiteGames.length + blackGames.length;
+      const wins =
+        whiteGames.filter((g) => g.result === 'WHITE_WINS').length +
+        blackGames.filter((g) => g.result === 'BLACK_WINS').length;
+      const losses =
+        whiteGames.filter((g) => g.result === 'BLACK_WINS').length +
+        blackGames.filter((g) => g.result === 'WHITE_WINS').length;
+      const draws =
+        whiteGames.filter((g) => g.result === 'DRAW').length +
+        blackGames.filter((g) => g.result === 'DRAW').length;
+      const winRate = totalGames > 0 ? Math.round((wins / totalGames) * 100) : 0;
+
+      return {
+        id: player.id,
+        name: player.name || player.username || 'Chess Master',
+        username: player.username,
+        rating: player.rating,
+        totalGames,
+        wins,
+        losses,
+        draws,
+        winRate,
+        createdAt: player.createdAt,
+      };
+    });
+
+    return res.json({ success: true, leaderboard });
   } catch (err) {
     console.error('Error fetching leaderboard:', err);
     return res.status(500).json({ success: false, error: 'Internal Server Error' });

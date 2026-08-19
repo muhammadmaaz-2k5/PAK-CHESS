@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Github, Youtube, Twitter } from 'lucide-react';
+import { Github } from 'lucide-react';
 
 export const Footer = () => {
   return (
@@ -30,22 +30,6 @@ export const Footer = () => {
             title="Star on GitHub"
           >
             <Github size={18} />
-          </a>
-          <a
-            href="https://youtube.com/@harkirat1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-full bg-stone-800 hover:bg-stone-700 hover:text-white transition-colors text-textSecondary"
-          >
-            <Youtube size={18} />
-          </a>
-          <a
-            href="https://twitter.com/kirat_tw"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-full bg-stone-800 hover:bg-stone-700 hover:text-white transition-colors text-textSecondary"
-          >
-            <Twitter size={18} />
           </a>
         </div>
 
